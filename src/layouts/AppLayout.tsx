@@ -6,7 +6,7 @@ type AppLayoutProps = {
 
 const AppLayout = ({children}: AppLayoutProps) => {
     return (
-        <div className="w-screen h-screen bg-custom-cream text-rm-green">
+        <div className="flex flex-col gap-4 justify-center items-center w-screen h-screen bg-custom-cream">
             {children}
         </div>
     )
