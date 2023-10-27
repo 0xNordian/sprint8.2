@@ -1,17 +1,13 @@
 import './App.css'
 import AppLayout from './layouts/AppLayout'
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi'
-import { useAppDispatch, useAppSelector } from './types/hooks'
-// import { incremented } from './features/counter/counterSlice'
-// import { increment, decrement } from './redux/counterSlice'
+import { useAppSelector } from './types/hooks'
+import {selectTotalExpenses, selectTodayExpenses, deltaExpenses} from './features/counter/counterSlice'
 
 function App() {
-    const count = useAppSelector((state) => state.counter.value)
-    // const dispatch = useAppDispatch();
-
-    // function handleClick() {
-    //     dispatch(incremented())
-    // }
+    const count = useAppSelector(selectTotalExpenses)
+    const todayCount = useAppSelector(selectTodayExpenses)
+    const diff = useAppSelector(deltaExpenses)
 
     return (
         <AppLayout>
@@ -70,11 +66,11 @@ function App() {
                                 Gastos de hoy
                             </small>
                             <h3 className="flex h-full w-full items-center justify-start">
-                                557.46 €
+                                {todayCount} €
                             </h3>
                         </div>
                         <div className="flex-3 flex flex-col items-center justify-center text-xs">
-                            <div className="w-full text-right">+2.4%</div>
+                            <div className="w-full text-right">{diff}%</div>
                             <div>Respecto a ayer</div>
                         </div>
                     </div>

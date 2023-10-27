@@ -1,38 +1,70 @@
-import { createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
-import type { RootState } from '../../redux/store'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import type { RootState } from '../../redux/store';
 
-// Define a type for the slice state
-interface CounterState {
-    value: number
+type ExpenseState = {
+    expenses: { [date: string]: number };
 }
 
-// Define the initial state using that type
-const initialState: CounterState = {
-    value: 3323,
+function getRandomInt(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-export const counterSlice = createSlice({
-    name: 'counter',
-    // `createSlice` will infer the state type from the `initialState` argument
+const startDate = new Date('2023-10-26');
+const expenses: { [date: string]: number } = {};
+
+for (let i = 0; i < 21; i++) {
+    const currentDate = new Date(startDate.getTime() + i * 24 * 60 * 60 * 1000);
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const year = currentDate.getFullYear();
+    const dateKey = `${day}/${month}/${year}`;
+    expenses[dateKey] = getRandomInt(10, 300);
+}
+
+console.log(new Date().toLocaleDateString('en-GB'));
+console.log(expenses);
+
+const initialState: ExpenseState = {
+    expenses: {
+        ...expenses, 
+    },
+};
+
+export const expenseSlice = createSlice({
+    name: 'expenses',
     initialState,
     reducers: {
-        incremented: (state) => {
-            state.value += 1
+        addExpense: (state, action: PayloadAction<{ date: string, amount: number }>) => {
+            state.expenses[action.payload.date] = action.payload.amount;
         },
-        decrement: (state) => {
-            state.value -= 1
+        updateExpense: (state, action: PayloadAction<{ date: string, amount: number }>) => {
+            if (state.expenses[action.payload.date]) {
+                state.expenses[action.payload.date] = action.payload.amount;
+            }
         },
-        // Use the PayloadAction type to declare the contents of `action.payload`
-        incrementByAmount: (state, action: PayloadAction<number>) => {
-            state.value += action.payload
+        removeExpense: (state, action: PayloadAction<string>) => {
+            delete state.expenses[action.payload];
         },
     },
-})
+});
 
-export const { incremented, decrement, incrementByAmount } = counterSlice.actions
+export const { addExpense, updateExpense, removeExpense } = expenseSlice.actions;
 
-// Other code such as selectors can use the imported `RootState` type
-export const selectCount = (state: RootState) => state.counter.value
+export const selectExpenses = (state: RootState) => state.expenses.expenses;
 
-export default counterSlice.reducer
+export const selectTotalExpenses = (state: RootState) => {
+    return Object.values(state.expenses.expenses).reduce((sum, amount) => sum + amount, 0);
+};
+
+export const selectTodayExpenses = (state: RootState) => {
+    const today = new Date().toLocaleDateString('en-GB');
+    return state.expenses.expenses[today] || 0;
+};
+
+export const deltaExpenses = (state: RootState) => {
+    const today = selectTodayExpenses(state);
+    const yesterday = new Date(new Date().getTime() - 24 * 60 * 60 * 1000).toLocaleDateString('en-GB');
+    return (((today / (state.expenses.expenses[yesterday] || 0))- 1) * 100).toFixed(2);
+}
+
+export default expenseSlice.reducer;
