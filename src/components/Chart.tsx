@@ -3,9 +3,9 @@ import { useRef, useEffect } from 'react';
 
 type EChartsOption = echarts.EChartsOption;
 
-const Chart = () => {
+const Chart = (weekArr: number[]) => {
     const chartRef = useRef<HTMLDivElement>(null);
-
+    const weekArray = weekArr["weekArr"]
     useEffect(() => {
         if (chartRef.current) {
             const myChart = echarts.init(chartRef.current);
@@ -19,7 +19,8 @@ const Chart = () => {
                 },
                 series: [
                     {
-                        data: [120, 200, 150, 80, 70, 110, 130],
+                        // data: [120, 200, 150, 80, 70, 110, 130],
+                        data: weekArray,
                         type: 'bar'
                     }
                 ]
@@ -27,7 +28,7 @@ const Chart = () => {
 
             myChart.setOption(option);
         }
-    }, []);
+    }, [weekArr]);
 
     return (
         <div className="pl-2" ref={chartRef} style={{ width: '100%', height: '220px' }} id="main"></div>

@@ -21,7 +21,7 @@ for (let i = 0; i < 21; i++) {
     expenses[dateKey] = getRandomInt(10, 300)
 }
 
-console.log(expenses)
+// console.log(expenses)
 
 export const getWeekBounds = (d?: Date) => {
     const newDate = new Date(d);
@@ -41,10 +41,6 @@ export const getWeekBounds = (d?: Date) => {
 }
 
 
-// console.log('getDays', getWeekBounds('2023-10-20'))
-// console.log('getDays', new Date("2023-10-27") >= getWeekBounds('2023-10-27')["monday"] && new Date("2023-10-27") <= getWeekBounds('2023-10-27')["sunday"])
-
-//
 
 const initialState: ExpenseState = {
     expenses: {
