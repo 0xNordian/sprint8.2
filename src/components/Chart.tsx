@@ -3,9 +3,14 @@ import { useRef, useEffect } from 'react';
 
 type EChartsOption = echarts.EChartsOption;
 
-const Chart = (weekArr: number[]) => {
+type ChartProps = {
+    weekArr: number[];
+};
+
+
+const Chart = ({weekArr}: ChartProps) => {
     const chartRef = useRef<HTMLDivElement>(null);
-    const weekArray = weekArr["weekArr"]
+    const weekArray = weekArr
     // console.log("weekArray: ", weekArray)
     useEffect(() => {
         if (chartRef.current) {
@@ -32,7 +37,7 @@ const Chart = (weekArr: number[]) => {
     }, [weekArr]);
 
     return (
-        <div className="pl-2" ref={chartRef} style={{ width: '100%', height: '220px' }} id="main"></div>
+        <div className="pl-2 w-32 md:w-52 lg:w-80 xl:w-96" ref={chartRef} style={{ width: '100%', height: '220px' }} id="main"></div>
     );
 };
 

@@ -16,9 +16,9 @@ import { Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
 
 const locales = {
-    spa: { src: '../public/spanish.png', alt: 'Spanish' },
-    eng: { src: '../public/english.png', alt: 'English' },
-    cat: { src: '../public/catalan.png', alt: 'Catalan' },
+    spa: { src: '/spanish.png', alt: 'Spanish' },
+    eng: { src: '/english.png', alt: 'English' },
+    cat: { src: '/catalan.png', alt: 'Catalan' },
 }
 
 function App() {
@@ -43,14 +43,14 @@ function App() {
     )
 
     const weekArr = Object.entries(weekExpenses)
-        .filter(([key, value]) => {
+        .filter(([key]) => {
             const date = key.split('/').reverse().join('-')
             return (
                 new Date(date) >= currentMonday &&
                 new Date(date) <= currentSunday
             )
         })
-        .map(([key, value]) => value)
+        .map(([, value]) => value)
 
     const weekArrLen = weekArr.length
 
@@ -65,79 +65,82 @@ function App() {
             setWeek(nextWeek)
         }
     }
-    console.log(
-        'obj test: ',
-        Object.entries(locales).map(([key, value]) => ({
-            src: value.src,
-            alt: value.alt,
-        })),
-    )
 
     return (
         <AppLayout>
-            <nav className="flex h-12 w-80 justify-end gap-2">
+            <nav className="flex h-12 w-80 items-center justify-end gap-2 lg:h-20 lg:w-80 xl:h-24 xl:w-96">
                 {Object.entries(locales).map(([key, value]) => (
                     <img
                         key={value.alt}
                         src={value.src}
                         alt={value.alt}
                         onClick={() => i18n.changeLanguage(key)}
-                        className="transition-scale h-auto w-12 scale-[1] rounded-full border-2 border-custom-cream outline outline-custom-coral duration-[.2s] ease-in-out hover:scale-[1.1]"
+                        className="transition-scale h-auto w-12 scale-[1] rounded-full border-2 border-custom-cream outline outline-custom-coral duration-[.2s] ease-in-out hover:scale-[1.1] lg:h-16 lg:w-16"
                     />
                 ))}
             </nav>
-            <div className="flex h-20 w-80 items-center rounded-xl bg-custom-coral text-white">
+            <div className="flex h-20 w-80 xl:h-24 xl:w-96 items-center rounded-xl bg-custom-coral text-white">
                 <div className="flex h-3/5 w-full pl-4">
                     <div className="flex h-full w-full flex-1 flex-col">
-                        <small className="flex h-full w-full items-center text-xs">
+                        <small className="flex h-full w-full items-center text-xs xl:text-md">
                             {t('app.totalBalance')}
                         </small>
-                        <h3 className="flex h-full w-full items-center justify-start">
+                        <h3 className="flex h-full w-full items-center justify-start xl:text-2xl">
                             {count} €
                         </h3>
                     </div>
                     <div className="flex-3 flex items-center gap-2 px-4">
-                        {(currentSunday >= today || weekArrLen > 0) && (
+                        {currentSunday >= today || weekArrLen > 0 ? (
                             <div
-                                className="cursor-pointer"
+                                className="transition-scale scale-[1] cursor-pointer duration-[.2s] ease-in-out hover:scale-[1.2] xl:text-2xl"
                                 onClick={() => handleWeek(week, 'decrease')}
                             >
                                 <FiArrowLeft />
                             </div>
-                        )}
-                        {!(currentSunday >= today) && (
+                        ) : (
                             <div
-                                className="cursor-pointer"
+                                className="placeholder "
+                                style={{ width: '16px', height: '16px' }}
+                            ></div>
+                        )}
+                        {!(currentSunday >= today) ? (
+                            <div
+                                className="transition-scale scale-[1] cursor-pointer duration-[.2s] ease-in-out hover:scale-[1.2] xl:text-2xl"
                                 onClick={() => handleWeek(week, 'increase')}
                             >
                                 <FiArrowRight />
                             </div>
+                        ) : (
+                            <div
+                                className="placeholder"
+                                style={{ width: '16px', height: '16px' }}
+                            ></div>
                         )}
                     </div>
                 </div>
             </div>
             <div>
-                <div>
+                <div className="xl:text-xl">
                     {currentMonday.toLocaleDateString('en-GB')} -{' '}
                     {currentSunday.toLocaleDateString('en-GB')}
                 </div>
             </div>
-            <main className="flex h-auto w-80 flex-col gap-2 rounded-xl bg-slate-100 p-4">
-                <h3>{t('app.weekLatestExpenses')}</h3>
-                <div className="h-auto w-full border">
+            <main className="flex h-auto w-80 lg:w-80 xl:w-96 flex-col gap-2 rounded-xl bg-slate-100 p-4">
+                <h3 className="lg:text-2xl">{t('app.weekLatestExpenses')}</h3>
+                <div className="h-auto w-full border rounded-lg">
                     <Chart weekArr={weekArr} />
                 </div>
                 <div className="flex h-3/5 w-full items-center justify-center">
                     <div className="flex h-3/5 w-full flex-1 flex-col items-center justify-center">
-                        <small className="flex h-full w-full items-center text-xs text-slate-400">
+                        <small className="flex h-full w-full items-center text-xs text-slate-400 lg:text-lg">
                             {t('app.todayExpenses')}
                         </small>
-                        <h3 className="flex h-full w-full items-center justify-start">
+                        <h3 className="flex h-full w-full items-center justify-start lg:text-3xl">
                             {todayCount} €
                         </h3>
                     </div>
-                    <div className="flex-3 flex flex-col items-center justify-center text-xs">
-                        <div className="w-full text-right">{diff}%</div>
+                    <div className="flex-3 flex flex-col items-center justify-center text-xs lg:text-lg">
+                        <div className="w-full text-right text-slate-400">{diff}%</div>
                         <div>{t('app.yesterdayDifference')}</div>
                     </div>
                 </div>
