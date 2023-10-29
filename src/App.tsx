@@ -24,21 +24,29 @@ function App() {
     const todayCount = useAppSelector(selectTodayExpenses)
     const diff = useAppSelector(deltaExpenses)
 
-    console.log("select expenses: ", useAppSelector(selectExpenses))
-    // console.log("week: ", getWeekBounds(week)["monday"])
+    const weekExpenses = useAppSelector(selectExpenses)
+    const currentMonday = new Date(getWeekBounds(week)['monday'])
+    const currentSunday = new Date(getWeekBounds(week)['sunday'])
+    // console.log("weekExpenses: ", Object.entries(weekExpenses).filter(([key, value]) => {
+    //     const date = key.split('/').reverse().join('-')
+    //     return (
+    //         new Date(date) >= currentMonday &&
+    //         new Date(date) <= currentSunday
+    //         )
+    //     }))
+        //! TO BE FIXED: Monday is not included in the weekArr
 
-    const test = useAppSelector(selectExpenses)
-
-    const currentMonday =
-        getWeekBounds(week)['monday'].toLocaleDateString('en-GB')
-    const currentSunday =
-        getWeekBounds(week)['sunday'].toLocaleDateString('en-GB')
-
-    const weekArr = Object.entries(test)
-        .filter(([key, value]) => key >= currentMonday && key <= currentSunday)
+        const weekArr = Object.entries(weekExpenses)
+        .filter(([key, value]) => {
+            const date = key.split('/').reverse().join('-')
+            return (
+                new Date(date) >= currentMonday &&
+                new Date(date) <= currentSunday
+            )
+        })
         .map(([key, value]) => value)
 
-        console.log("weekArr: ", weekArr)
+    console.log("weekArr: ", weekArr)
 
     const handleWeek = (today: Date, type: 'increase' | 'decrease') => {
         if (type === 'decrease') {
@@ -98,12 +106,15 @@ function App() {
                 </div>
             </div>
             <div>
-                {currentMonday} - {currentSunday}
+                <div>
+                    {currentMonday.toLocaleDateString('en-GB')} -{' '}
+                    {currentSunday.toLocaleDateString('en-GB')}
+                </div>
             </div>
             <main className="flex h-auto w-80 flex-col gap-2 rounded-xl bg-slate-100 p-4">
                 <h3>Gastos - última semana</h3>
                 <div className="h-auto w-full border">
-                    <Chart weekArr={weekArr}/>
+                    <Chart weekArr={weekArr} />
                 </div>
                 <div className="flex h-3/5 w-full items-center justify-center">
                     <div className="flex h-3/5 w-full flex-1 flex-col items-center justify-center">

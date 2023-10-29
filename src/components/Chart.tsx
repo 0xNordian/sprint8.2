@@ -6,6 +6,7 @@ type EChartsOption = echarts.EChartsOption;
 const Chart = (weekArr: number[]) => {
     const chartRef = useRef<HTMLDivElement>(null);
     const weekArray = weekArr["weekArr"]
+    // console.log("weekArray: ", weekArray)
     useEffect(() => {
         if (chartRef.current) {
             const myChart = echarts.init(chartRef.current);
