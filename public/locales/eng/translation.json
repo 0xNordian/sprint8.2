@@ -1,0 +1,8 @@
+{
+    "app": {
+        "totalBalance": "Total Balance",
+        "weekLatestExpenses": "Last week - expenses",
+        "todayExpenses": "Today expenses",
+        "yesterdayDifference": "vs yesterday"
+    }
+}
