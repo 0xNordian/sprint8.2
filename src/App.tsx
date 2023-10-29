@@ -25,8 +25,8 @@ function App() {
     const diff = useAppSelector(deltaExpenses)
 
     const weekExpenses = useAppSelector(selectExpenses)
-    const currentMonday = new Date(getWeekBounds(week)['monday'])
-    const currentSunday = new Date(getWeekBounds(week)['sunday'])
+    const currentMonday = new Date(getWeekBounds(week)['monday'].setHours(0,0,0,0))
+    const currentSunday = new Date(getWeekBounds(week)['sunday'].setHours(23,59,59,999))
     // console.log("weekExpenses: ", Object.entries(weekExpenses).filter(([key, value]) => {
     //     const date = key.split('/').reverse().join('-')
     //     return (
