@@ -5,61 +5,62 @@ type ExpenseState = {
     expenses: { [date: string]: number }
 }
 
-// function getRandomInt(min: number, max: number) {
-//     return Math.floor(Math.random() * (max - min + 1)) + min
-// }
+function getRandomInt(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min + 1)) + min
+}
 
-// const startDate = new Date('2023-10-26')
-// let expenses: { [date: string]: number } = {}
+const startDate = new Date()
+let expenses: { [date: string]: number } = {}
 
-let expenses: { [date: string]: number } = {
-    '01/10/2023': 1,
-    '02/10/2023': 2,
-    '03/10/2023': 3,
-    '04/10/2023': 4,
-    '05/10/2023': 5,
-    '06/10/2023': 6,
-    '07/10/2023': 7,
-    '08/10/2023': 8,
-    '09/10/2023': 9,
-    '10/10/2023': 10,
-    '11/10/2023': 11,
-    '12/10/2023': 12,
-    '13/10/2023': 13,
-    '14/10/2023': 14,
-    '15/10/2023': 15,
-    '16/10/2023': 16,
-    '17/10/2023': 17,
-    '18/10/2023': 18,
-    '19/10/2023': 19,
-    '20/10/2023': 20,
-    '21/10/2023': 21,
-    '22/10/2023': 22,
-    '23/10/2023': 23,
-    '24/10/2023': 24,
-    '25/10/2023': 25,
-    '26/10/2023': 26,
-    '27/10/2023': 27,
-    '28/10/2023': 28,
-    '29/10/2023': 29,
-    '30/10/2023': 30,
-    '31/10/2023': 31,
-    '01/11/2023': 32,
-    '02/11/2023': 33,
-    '03/11/2023': 34,
-    '04/11/2023': 35,
-    '05/11/2023': 36,
-};
+for (let i = 0; i <= 41; i++) {  // Adjust the loop to start at 0 and end at 20
+    // Subtract days from the startDate instead of adding
+    const currentDate = new Date(startDate.getTime() - i * 24 * 60 * 60 * 1000);  
+    console.log("currentDate", currentDate);
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const year = currentDate.getFullYear();
+    const dateKey = `${day}/${month}/${year}`;
+    expenses[dateKey] = getRandomInt(50, 300);
+}
 
-// for (let i = 0; i < 21; i++) {
-//     const currentDate = new Date(startDate.getTime() + i * 24 * 60 * 60 * 1000)
-//     const day = currentDate.getDate().toString().padStart(2, '0')
-//     const month = (currentDate.getMonth() + 1).toString().padStart(2, '0')
-//     const year = currentDate.getFullYear()
-//     const dateKey = `${day}/${month}/${year}`
-//     expenses[dateKey] = getRandomInt(10, 300)
-// }
-
+// let expenses: { [date: string]: number } = {
+//     '01/10/2023': 157,
+//     '02/10/2023': 283,
+//     '03/10/2023': 133,
+//     '04/10/2023': 40,
+//     '05/10/2023': 145,
+//     '06/10/2023': 635,
+//     '07/10/2023': 127,
+//     '08/10/2023': 88,
+//     '09/10/2023': 119,
+//     '10/10/2023': 108,
+//     '11/10/2023': 45,
+//     '12/10/2023': 322,
+//     '13/10/2023': 130,
+//     '14/10/2023': 200,
+//     '15/10/2023': 150,
+//     '16/10/2023': 168,
+//     '17/10/2023': 276,
+//     '18/10/2023': 67,
+//     '19/10/2023': 190,
+//     '20/10/2023': 207,
+//     '21/10/2023': 321,
+//     '22/10/2023': 262,
+//     '23/10/2023': 23,
+//     '24/10/2023': 240,
+//     '25/10/2023': 125,
+//     '26/10/2023': 206,
+//     '27/10/2023': 78,
+//     '28/10/2023': 280,
+//     '29/10/2023': 129,
+//     '30/10/2023': 70,
+//     '31/10/2023': 310,
+//     '01/11/2023': 132,
+//     '02/11/2023': 333,
+//     '03/11/2023': 349,
+//     '04/11/2023': 250,
+//     '05/11/2023': 136,
+// };
 
 console.log(expenses)
 
