@@ -1,7 +1,8 @@
 const BtnTest = () => {
+  const sum = 2 + 2;
   return (
-    <button>BtnTest</button>
+    <button data-testid="btnTest">BtnTest {sum}</button>
   )
 }
 
-export default BtnTest
+export default BtnTest;
