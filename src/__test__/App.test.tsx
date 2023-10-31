@@ -42,4 +42,4 @@ describe('App', () => {
         expect(count).toBeGreaterThan(0);
     });
 
-});
+}); 
