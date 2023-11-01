@@ -23,7 +23,7 @@ jobs:
 
       - name: SonarCloud Scan
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONARCLOUD }}
         run: |
           npm run build  # Replace with your build command
           npm install -g sonarqube-scanner
