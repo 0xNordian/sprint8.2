@@ -37,7 +37,7 @@ const Chart = ({weekArr}: ChartProps) => {
     }, [weekArr]);
 
     return (
-        <div className="pl-2 w-32 md:w-52 lg:w-80 xl:w-96" ref={chartRef} style={{ width: '100%', height: '220px' }} id="main"></div>
+        <div className="pl-2 w-32 md:w-52 lg:w-80 xl:w-96" ref={chartRef} style={{ width: '100%', height: '220px' }} id="chartMain" data-testid="chart"></div>
     );
 };
 

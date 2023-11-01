@@ -5,15 +5,14 @@ type ExpenseState = {
     expenses: { [date: string]: number }
 }
 
-function getRandomInt(min: number, max: number): number {
+export function getRandomInt(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
 const startDate = new Date()
 let expenses: { [date: string]: number } = {}
 
-for (let i = 0; i <= 41; i++) {  // Adjust the loop to start at 0 and end at 20
-    // Subtract days from the startDate instead of adding
+for (let i = 0; i <= 41; i++) {
     const currentDate = new Date(startDate.getTime() - i * 24 * 60 * 60 * 1000);  
     console.log("currentDate", currentDate);
     const day = currentDate.getDate().toString().padStart(2, '0');
@@ -29,14 +28,11 @@ export const getWeekBounds = (d: Date = new Date()) => {
     const newDate = new Date(d);
     let day = newDate.getDay();
     
-    // Calculate Monday
     let diffToMonday = newDate.getDate() - day + (day == 0 ? -6 : 1); 
     let monday = new Date(newDate.setDate(diffToMonday));
 
-    // Calculate Sunday
     let diffToSunday = diffToMonday + 6;
     let sunday = new Date(newDate.setDate(diffToSunday));
-    // console.log(monday, sunday)
     
     return { monday, sunday };
 }

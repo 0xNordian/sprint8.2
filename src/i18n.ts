@@ -10,9 +10,6 @@ i18n
     .init({
         fallbackLng: 'spa',
         debug: true,
-        // interpolation: {
-        //     escapeValue: false,
-        // },
     })
 
     export default i18n;
